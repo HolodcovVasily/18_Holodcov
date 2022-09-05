@@ -8,13 +8,13 @@ const pagesSelect = document.querySelector("#pagesSelect");
 const inputSearch = document.querySelector(".input-search");
 const btnSearch = document.querySelector("button.search");
 const ulPagination = document.querySelector("ul.pagination.pagination-lg");
-
+// let changePages;
 const pageItem = document.querySelectorAll("li.page-item");
 const tHead = document.querySelector("thead");
 const sortable = document.querySelectorAll(".sortable");
 
 let newTr;
-let numberPage = 0;
+let numberPage = 1;
 let sortableElement;
 let sortFrom = "asc";
 
@@ -60,6 +60,7 @@ function getBooks(url) {
       });
     });
   console.log(url);
+
   fetch(url)
     .then((response) => {
       return response.json();
@@ -93,18 +94,14 @@ function removeTr() {
 
 function changeUrl() {
   getBooks(
-    `${url.slice(0, url.indexOf("size"))}&size=${
-      pagesSelect.value
-    }&page=${numberPage}&search=${
-      inputSearch.value
-    }&orderBy=${sortableElement},${sortFrom}`
+    `${url.slice(0, url.indexOf("size"))}&size=${pagesSelect.value}&page=${
+      numberPage - 1
+    }&search=${inputSearch.value}&orderBy=${sortableElement},${sortFrom}`
   );
   console.log(
-    `${url.slice(0, url.indexOf("size"))}&size=${
-      pagesSelect.value
-    }&page=${numberPage}&search=${
-      inputSearch.value
-    }&orderBy=${sortableElement},${sortFrom}`
+    `${url.slice(0, url.indexOf("size"))}&size=${pagesSelect.value}&page=${
+      numberPage - 1
+    }&search=${inputSearch.value}&orderBy=${sortableElement},${sortFrom}`
   );
 }
 
@@ -127,36 +124,9 @@ sortable.forEach((elem) => {
   });
 });
 
-// function doUnDisabled() {
-//   pageItem.forEach((elem) => {
-//     elem.disabled = false;
-//   });
-// }
-
-async function countPages() {
-  let changePages = document.querySelectorAll("a.page-link");
-  return changePages;
-}
-
-countPages().then(
-  //   changePages.forEach((link) => {
-  //     //   doUnDisabled();
-  //     link.addEventListener("click", (event) => {
-  //       numberPage = +event.target.innerHTML;
-  //       // event.target.disabled = true;
-  //       removeTr();
-  //       changeUrl();
-  //     });
-  //   })
-  console.log
-);
-
-// document.querySelectorAll("a.page-link").forEach((link) => {
-//   //   doUnDisabled();
-//   link.addEventListener("click", (event) => {
-//     numberPage = +event.target.innerHTML;
-//     // event.target.disabled = true;
-//     removeTr();
-//     changeUrl();
-//   });
-// });
+ulPagination.addEventListener("click", (event) => {
+  numberPage = +event.target.innerHTML;
+  removeTr();
+  changeUrl();
+  numberPage = 1;
+});

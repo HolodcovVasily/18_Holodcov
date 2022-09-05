@@ -118,3 +118,16 @@ thead tr td img{
 thead tr td:last-child{
     text-align: center;
 }
+
+tr th.sortable:nth-child(1){
+    width: 5%;
+}
+tr th.sortable:nth-child(2), tr th.sortable:nth-child(3){
+    width: 30%;
+}
+tr th.sortable:nth-child(4), tr th.sortable:nth-child(5){
+    width: 10%;
+}
+tr th.sortable:nth-child(6){
+    width: 15%;
+}
