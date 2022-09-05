@@ -8,7 +8,6 @@ const pagesSelect = document.querySelector("#pagesSelect");
 const inputSearch = document.querySelector(".input-search");
 const btnSearch = document.querySelector("button.search");
 const ulPagination = document.querySelector("ul.pagination.pagination-lg");
-// let changePages;
 const pageItem = document.querySelectorAll("li.page-item");
 const tHead = document.querySelector("thead");
 const sortable = document.querySelectorAll(".sortable");
@@ -27,7 +26,6 @@ function getBooks(url) {
     .then((books) => {
       console.log(books);
       books.forEach((book) => {
-        // console.log(book)
         newTr = document.createElement("tr");
         newTr.classList.add("added");
         tHead.append(newTr);
@@ -59,7 +57,6 @@ function getBooks(url) {
         newTr.append(bookImage);
       });
     });
-  console.log(url);
 
   fetch(url)
     .then((response) => {
@@ -75,7 +72,6 @@ function getBooks(url) {
         ulPagination.append(newLi);
       }
     });
-  console.log(url);
 }
 getBooks(url);
 
@@ -91,7 +87,6 @@ function removeTr() {
 }
 
 // console.log(url.indexOf("size"));
-
 function changeUrl() {
   getBooks(
     `${url.slice(0, url.indexOf("size"))}&size=${pagesSelect.value}&page=${
