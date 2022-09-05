@@ -8,7 +8,7 @@ const pagesSelect = document.querySelector("#pagesSelect");
 const inputSearch = document.querySelector(".input-search");
 const btnSearch = document.querySelector("button.search");
 const ulPagination = document.querySelector("ul.pagination.pagination-lg");
-const pageLink = document.querySelectorAll("a.page-link");
+
 const pageItem = document.querySelectorAll("li.page-item");
 const tHead = document.querySelector("thead");
 const sortable = document.querySelectorAll(".sortable");
@@ -59,16 +59,32 @@ function getBooks(url) {
         newTr.append(bookImage);
       });
     });
-  // .then((response) => response.totalPages)
-  // .then((lengthPages) => {
-  //   console.log(lengthPages);
-  // });
+  console.log(url);
+  fetch(url)
+    .then((response) => {
+      return response.json();
+    })
+    .then((response) => response.totalPages)
+    .then((lengthPages) => {
+      console.log(lengthPages);
+      for (let i = 0; i < lengthPages; i++) {
+        let newLi = document.createElement("li");
+        newLi.classList.add("page-item");
+        newLi.innerHTML = `<a class="page-link" href="#">${i + 1}</a>`;
+        ulPagination.append(newLi);
+      }
+    });
+  console.log(url);
 }
 getBooks(url);
 
 function removeTr() {
   let added = document.querySelectorAll(".added");
   added.forEach((elem) => {
+    elem.remove();
+  });
+  let pageItem = document.querySelectorAll(".page-item");
+  pageItem.forEach((elem) => {
     elem.remove();
   });
 }
@@ -102,22 +118,6 @@ btnSearch.addEventListener("click", () => {
   changeUrl();
 });
 
-function doUnDisabled() {
-  pageItem.forEach((elem) => {
-    elem.disabled = false;
-  });
-}
-
-pageLink.forEach((link) => {
-  doUnDisabled();
-  link.addEventListener("click", (event) => {
-    numberPage = +event.target.innerHTML;
-    // event.target.disabled = true;
-    removeTr();
-    changeUrl();
-  });
-});
-
 sortable.forEach((elem) => {
   elem.addEventListener("click", (event) => {
     sortFrom = sortFrom === "asc" ? "desc" : "asc";
@@ -126,3 +126,37 @@ sortable.forEach((elem) => {
     changeUrl();
   });
 });
+
+// function doUnDisabled() {
+//   pageItem.forEach((elem) => {
+//     elem.disabled = false;
+//   });
+// }
+
+async function countPages() {
+  let changePages = document.querySelectorAll("a.page-link");
+  return changePages;
+}
+
+countPages().then(
+  //   changePages.forEach((link) => {
+  //     //   doUnDisabled();
+  //     link.addEventListener("click", (event) => {
+  //       numberPage = +event.target.innerHTML;
+  //       // event.target.disabled = true;
+  //       removeTr();
+  //       changeUrl();
+  //     });
+  //   })
+  console.log
+);
+
+// document.querySelectorAll("a.page-link").forEach((link) => {
+//   //   doUnDisabled();
+//   link.addEventListener("click", (event) => {
+//     numberPage = +event.target.innerHTML;
+//     // event.target.disabled = true;
+//     removeTr();
+//     changeUrl();
+//   });
+// });
