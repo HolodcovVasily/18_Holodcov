@@ -3,3 +3,5 @@
 
 const url =
   "https://it-academy-js-api-zmicerboksha.vercel.app/api/course/books";
+const btn;
+const select;
