@@ -109,3 +109,12 @@
 .loader-wrapper {
     display: flex;
 }
+
+thead tr td img{
+    height: 50px;
+    
+}
+
+thead tr td:last-child{
+    text-align: center;
+}
