@@ -16,6 +16,7 @@ let newTr;
 let numberPage = 1;
 let sortableElement;
 let sortFrom = "asc";
+let liStyled;
 
 function getBooks(url) {
   fetch(url)
@@ -24,7 +25,7 @@ function getBooks(url) {
     })
     .then((response) => response.content)
     .then((books) => {
-      console.log(books);
+      // console.log(books);
       books.forEach((book) => {
         newTr = document.createElement("tr");
         newTr.classList.add("added");
@@ -64,13 +65,21 @@ function getBooks(url) {
     })
     .then((response) => response.totalPages)
     .then((lengthPages) => {
-      console.log(lengthPages);
+      // console.log(lengthPages);
       for (let i = 0; i < lengthPages; i++) {
         let newLi = document.createElement("li");
         newLi.classList.add("page-item");
-        newLi.innerHTML = `<a class="page-link" href="#">${i + 1}</a>`;
+        newLi.innerHTML = `<a class="page-link" title="Перейти на страницу ${
+          i + 1
+        }" href="#">${i + 1}</a>`;
         ulPagination.append(newLi);
       }
+
+      document.querySelectorAll("a").forEach((a) => {
+        if (a.innerHTML === liStyled) {
+          a.classList.add("marked");
+        }
+      });
     });
 }
 getBooks(url);
@@ -89,11 +98,6 @@ function removeTr() {
 // console.log(url.indexOf("size"));
 function changeUrl() {
   getBooks(
-    `${url.slice(0, url.indexOf("size"))}&size=${pagesSelect.value}&page=${
-      numberPage - 1
-    }&search=${inputSearch.value}&orderBy=${sortableElement},${sortFrom}`
-  );
-  console.log(
     `${url.slice(0, url.indexOf("size"))}&size=${pagesSelect.value}&page=${
       numberPage - 1
     }&search=${inputSearch.value}&orderBy=${sortableElement},${sortFrom}`
@@ -120,7 +124,10 @@ sortable.forEach((elem) => {
 });
 
 ulPagination.addEventListener("click", (event) => {
+  //numberPage буду обнулять при новом запросе
   numberPage = +event.target.innerHTML;
+  //liStyled переменная для оформления текущей страницы
+  liStyled = event.target.innerHTML;
   removeTr();
   changeUrl();
   numberPage = 1;
